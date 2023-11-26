@@ -1,12 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 let AddUser = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
-    // console.log(errors);
     let onSubmit = (data) => {
-        console.log(data);
+        let reqBody = {
+            'uName': data.uName,
+            'uEmail': data.uEmail,
+            'uMobile': data.uMobile,
+            'uLocation': data.uLocation
+        }
+        axios.post('http://localhost:8080/addUser', reqBody)
+            .then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                throw error;
+            });
     }
 
     return (
