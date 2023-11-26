@@ -7,6 +7,23 @@ let AddUser = () => {
     // console.log(errors);
     let onSubmit = (data) => {
         console.log(data);
+        // console.log(JSON.parse(data));
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8080/addUser');
+        xhr.onload = () => {
+            console.log(xhr);
+        }
+        xhr.send(data);
+    }
+
+    let testAPI = () => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/test');
+        xhr.onload = () => {
+            console.log(xhr);
+        }
+        xhr.
+            xhr.send();
     }
 
     return (
@@ -66,6 +83,8 @@ let AddUser = () => {
                     <input type="submit" className="btn btn-sm btn-primary" value="Submit" />
                 </form>
             </div>
+
+            {/* <button onClick={testAPI}>TEST GET API</button> */}
         </>
     )
 }
