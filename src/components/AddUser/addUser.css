@@ -1,0 +1,21 @@
+h2 {
+    text-align: center;
+}
+
+.formContainer {
+    border: 1px solid black;
+    /* width: 500px; */
+    margin-top: 50px;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    padding: 20px;
+    font-weight: bold;
+}
+
+p {
+    text-align: center;
+}
+
+.formContainer {
+    background-color: #9ADE7B;
+}
