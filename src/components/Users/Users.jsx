@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 let User = () => {
+
+    const [userDetails, setUserDetails] = useState([])
+    useEffect(() => {
+        axios.get('http://localhost:8080/users')
+            .then((resp) => {
+                setUserDetails(resp.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [])
+
+
     return (
         <>
             <h4>User Details</h4>
@@ -10,16 +24,22 @@ let User = () => {
                         <th scope="col">Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
                         <th scope="col">Location</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Krunal Jumde</td>
-                        <td>KrunalJumde24@gmail.com</td>
-                        <td>Nagpur</td>
-                    </tr>
+                    {userDetails.map((data) => {
+                        return (
+                            <tr>
+                                <td>{data.id}</td>
+                                <td>{data.name}</td>
+                                <td>{data.email}</td>
+                                <td>{data.mobile}</td>
+                                <td>{data.location}</td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </>

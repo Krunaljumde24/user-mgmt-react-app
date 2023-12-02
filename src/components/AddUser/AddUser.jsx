@@ -4,11 +4,10 @@ import { useForm } from "react-hook-form";
 let AddUser = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
-    // console.log(errors);
     let onSubmit = (data) => {
         console.log(data);
-    }
-
+    }  
+    
     return (
         <>
             <div className="formContainer">
