@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import deleteIcon from './delete-icon-100.png'
-import editIcon from './icons8-edit-100.png'
+import Error from "../Error";
 
 import './users.css'
 
 
 let User = () => {
     const [userData, setUserData] = useState([])
+    const [usrDtlFLg, setUsrDtlFlg] = useState(false)
     useEffect(() => {
         axios.get('http://localhost:8080/users')
             .then((response) => {
                 setUserData(response.data)
+                setUsrDtlFlg(true)
             }).catch((error) => {
-                throw error;
+                console.log(error);
+                setUsrDtlFlg(true)
             })
     }, [])
 
@@ -39,7 +41,7 @@ let User = () => {
     let deleteUserById = (id) => {
         axios.delete('http://localhost:8080/deleteUserById', {
             params: {
-                userId : id
+                userId: id
             }
         }).then((response) => {
             console.log(response);
@@ -52,55 +54,57 @@ let User = () => {
     return (
         <>
             <h4>User Details</h4>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Mobile</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {userData.map((data) => {
-                        return (
-                            <tr key={data.id}>
 
-                                <td>{data.id}</td>
-                                <td>{data.name}</td>
-                                <td>{data.email}</td>
-                                <td>{data.mobile}</td>
-                                <td>{data.location}</td>
-                                <td>
-                                    <button
-                                        className="btn btn-sm btn-primary mx-1"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#userDetailEditModal"
-                                        onClick={() => { handleSomething(data) }}
-                                    >
-                                        Edit
-                                    </button>
-                                    {/* <button type="button" className="btn btn-sm">
+            {usrDtlFLg ? <Error /> :
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userData.map((data) => {
+                            return (
+                                <tr key={data.id}>
+
+                                    <td>{data.id}</td>
+                                    <td>{data.name}</td>
+                                    <td>{data.email}</td>
+                                    <td>{data.mobile}</td>
+                                    <td>{data.location}</td>
+                                    <td>
+                                        <button
+                                            className="btn btn-sm btn-primary mx-1"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#userDetailEditModal"
+                                            onClick={() => { handleSomething(data) }}
+                                        >
+                                            Edit
+                                        </button>
+                                        {/* <button type="button" className="btn btn-sm">
                                         <img className="actionIcons" src={editIcon} alt="" srcset="" />
                                     </button>
                                     <button type="button" className="btn btn-sm">
                                         <img className="actionIcons" src={deleteIcon} alt="" srcset="" />
                                     </button> */}
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-danger mx-1"
-                                        onClick={() => { deleteUserById(data.id) }}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table >
+                                        <button
+                                            type="button"
+                                            className="btn btn-sm btn-danger mx-1"
+                                            onClick={() => { deleteUserById(data.id) }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table >}
             <div
                 className="modal fade"
                 id="userDetailEditModal"
