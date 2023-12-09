@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 let AddUser = () => {
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm()
+    const { register, handleSubmit, resetField, watch, formState: { errors, isSubmitSuccessful }, reset } = useForm()
     let onSubmit = (data) => {
         console.log(data);
-    }  
-    
+        axios.post('http://localhost:8080/addUser', {
+            'uName': data.uName,
+            'uEmail': data.uEmail,
+            'uMobile': data.uMobile,
+            'uLocation': data.uLocation
+        })
+            .then((response) => {
+                console.log(response);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        resetField('uName')
+        resetField('uEmail')
+        resetField('uMobile')
+        resetField('uLocation')
+    }
+
     return (
         <>
             <div className="formContainer">

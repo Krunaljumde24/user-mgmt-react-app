@@ -31,7 +31,7 @@ let User = () => {
                 <tbody>
                     {userDetails.map((data) => {
                         return (
-                            <tr>
+                            <tr key={data.id}>
                                 <td>{data.id}</td>
                                 <td>{data.name}</td>
                                 <td>{data.email}</td>
